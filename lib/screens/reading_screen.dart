@@ -69,20 +69,21 @@ class _ReadingScreenState extends State<ReadingScreen> {
   }
 
   void fetchData() async {
-    print(kURL);
     final response = await http.get(Uri.parse('http://${kURL}/'));
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       setState(() {
         data = jsonDecode(response.body);
-        EMG = double.parse(data['EMG']);
+        EMG = double.parse(data['data']);
         if (list_data.length > 500) list_data = [];
         list_data.add(EMG);
-        sodium = double.parse(data['Na']);
-        calcium = double.parse(data['Ca']);
-        potassium = double.parse(data['K']);
-        oxygen = double.parse(data['O2']);
-        glucose = double.parse(data['Gluo']);
-        magnessium = double.parse(data['Mg']);
+        sodium = double.parse(data['data1']);
+        calcium = double.parse(data['data2']);
+        potassium = double.parse(data['data3']);
+        oxygen = double.parse(data['data4']);
+        glucose = double.parse(data['data5']);
+        magnessium = double.parse(data['data1']);
       });
     } else {}
   }
@@ -143,7 +144,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
                           "Detected Values",
                           style: kNumberTextStyle,
                         ),
-                        Text("${data.toString()}  ${error.toString()}"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
