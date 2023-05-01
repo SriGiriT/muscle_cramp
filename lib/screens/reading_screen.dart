@@ -69,23 +69,24 @@ class _ReadingScreenState extends State<ReadingScreen> {
   }
 
   void fetchData() async {
-    final response = await http.get(Uri.parse('http://${kURL}/'));
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == 200) {
-      setState(() {
-        data = jsonDecode(response.body);
-        EMG = double.parse(data['data']);
-        if (list_data.length > 500) list_data = [];
-        list_data.add(EMG);
-        sodium = double.parse(data['data1']);
-        calcium = double.parse(data['data2']);
-        potassium = double.parse(data['data3']);
-        oxygen = double.parse(data['data4']);
-        glucose = double.parse(data['data5']);
-        magnessium = double.parse(data['data1']);
-      });
-    } else {}
+    final response = await http.get(Uri.parse('http://${kURL}/')).then(
+      (value) {
+        data = jsonDecode(value.body);
+        setState(() {
+          EMG = double.parse(data['data']);
+          if (list_data.length > 500) list_data = [];
+          list_data.add(EMG);
+          sodium = double.parse(data['data1']);
+          calcium = double.parse(data['data2']);
+          potassium = double.parse(data['data3']);
+          oxygen = double.parse(data['data4']);
+          glucose = double.parse(data['data5']);
+          magnessium = double.parse(data['data1']);
+        });
+      },
+    ).catchError((eooro) {
+      error = eooro.toString();
+    });
   }
 
   @override
