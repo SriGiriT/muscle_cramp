@@ -73,6 +73,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
       (value) {
         data = jsonDecode(value.body);
         setState(() {
+          print(data);
           EMG = double.parse(data['data']);
           if (list_data.length > 500) list_data = [];
           list_data.add(EMG);
@@ -86,6 +87,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
       },
     ).catchError((eooro) {
       error = eooro.toString();
+      print(error);
     });
   }
 
