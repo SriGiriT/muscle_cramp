@@ -24,8 +24,12 @@ class _ReadingScreenState extends State<ReadingScreen> {
   double oxygen = 95;
   double glucose = 5.9;
   double magnessium = 1.01;
-  TextEditingController _textEditingController = TextEditingController();
-  String _value = kURL;
+  TextEditingController _controller1 = TextEditingController();
+  TextEditingController _controller2 = TextEditingController();
+  TextEditingController _controller3 = TextEditingController();
+  String _value1 = 'Initial Value 1';
+  String _value2 = 'Initial Value 2';
+  String _value3 = 'Initial Value 3';
   var data;
   @override
   void initState() {
@@ -40,10 +44,26 @@ class _ReadingScreenState extends State<ReadingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter new value'),
-          content: TextField(
-            controller: _textEditingController,
-            keyboardType: TextInputType.text,
+          title: Text('Enter new values'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: _controller1,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(labelText: 'Value 1'),
+              ),
+              TextField(
+                controller: _controller2,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(labelText: 'Value 2'),
+              ),
+              TextField(
+                controller: _controller3,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(labelText: 'Value 3'),
+              ),
+            ],
           ),
           actions: <Widget>[
             TextButton(
@@ -56,8 +76,12 @@ class _ReadingScreenState extends State<ReadingScreen> {
               child: Text('OK'),
               onPressed: () {
                 setState(() {
-                  _value = _textEditingController.text;
-                  kURL = _value;
+                  _value1 = _controller1.text;
+                  kURL1 = _value1;
+                  _value2 = _controller2.text;
+                  kURL2 = _value2;
+                  _value3 = _controller3.text;
+                  kURL3 = _value3;
                 });
                 Navigator.of(context).pop();
               },
@@ -68,8 +92,10 @@ class _ReadingScreenState extends State<ReadingScreen> {
     );
   }
 
+  ////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
   void fetchData() async {
-    final response = await http.get(Uri.parse('http://${kURL}/')).then(
+    final response = await http.get(Uri.parse('http://${kURL1}/')).then(
       (value) {
         data = jsonDecode(value.body);
         setState(() {
@@ -79,17 +105,37 @@ class _ReadingScreenState extends State<ReadingScreen> {
           list_data.add(EMG);
           sodium = double.parse(data['data1']);
           calcium = double.parse(data['data2']);
-          potassium = double.parse(data['data3']);
-          oxygen = double.parse(data['data4']);
-          glucose = double.parse(data['data5']);
-          magnessium = double.parse(data['data1']);
         });
       },
     ).catchError((eooro) {
       error = eooro.toString();
       print(error);
     });
+    final response1 =
+        await http.get(Uri.parse('http://${kURL2}')).then((value) {
+      data = jsonDecode(value.body);
+      setState(() {
+        potassium = double.parse(data['data3']);
+        oxygen = double.parse(data['data4']);
+      });
+    }).catchError((eooro) {
+      error = eooro.toString();
+      print(error);
+    });
+    final response2 =
+        await http.get(Uri.parse('http://${kURL3}')).then((value) {
+      data = jsonDecode(value.body);
+      setState(() {
+        glucose = double.parse(data['data5']);
+        magnessium = double.parse(data['data1']);
+      });
+    }).catchError((eooro) {
+      error = eooro.toString();
+      print(error);
+    });
   }
+  ///////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
