@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:muscle_cramp/constant.dart';
+import 'package:muscle_cramp/components/TextFieldContainer.dart';
+
+class RoundedInputField extends StatefulWidget {
+  final String hintText;
+  final IconData icon;
+  final ValueChanged<String> onChanged;
+  final VoidCallback onTap;
+  final bool isDes;
+  final bool isList;
+  final bool isDT;
+  final double times;
+  const RoundedInputField(
+      {required this.hintText,
+      required this.isDT,
+      required this.onTap,
+      required this.icon,
+      required this.onChanged,
+      required this.times,
+      required this.isList,
+      required this.isDes});
+
+  @override
+  State<RoundedInputField> createState() => _RoundedInputFieldState();
+}
+
+class _RoundedInputFieldState extends State<RoundedInputField> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      width: widget.times,
+      isLis : widget.isList,
+      isDescription: widget.isDes,
+      child: TextField(
+        readOnly: widget.isDT,
+        style: kButtonTextStyle,
+        onTap: widget.onTap,
+        // widget.onChanged;
+        onChanged: widget.onChanged,
+        cursorColor: Colors.green,
+        maxLines: widget.isDes
+            ? widget.isList
+                ? 4
+                : 10
+            : 1,
+        decoration: InputDecoration(
+          hintStyle: TextStyle(color: Colors.white),
+          icon: Icon(
+            widget.icon,
+            color: Colors.white,
+          ),
+          hintText: widget.hintText,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}

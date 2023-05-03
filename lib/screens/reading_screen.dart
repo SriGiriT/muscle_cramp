@@ -144,6 +144,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
         backgroundColor: Color(0xFF818CF8),
         title: Text('Muscle Cramp'),
         actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.sos, color: Colors.red,),),
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {

@@ -45,3 +45,6 @@ const kBMITextStyle = TextStyle(
 const kBodyTextStyle = TextStyle(
   fontSize: 22.0,
 );
+
+TextStyle kButtonTextStyle =
+    TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);

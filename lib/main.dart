@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:muscle_cramp/constant.dart';
+import 'package:muscle_cramp/screens/login.dart';
 import 'package:muscle_cramp/screens/reading_screen.dart';
 Future main() async{
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF818CF8),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ReadingScreen(),
+      home: LoginPage(),
     );
   }
 }
